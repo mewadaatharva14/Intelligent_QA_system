@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ask PDF | Intelligent QA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .chat-box {
+      background-color: #111;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      min-height: 200px;
+      position: relative;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="file"],
+    textarea {
+      background-color: #1e1e1e;
+      color: #fff;
+      border: 1px solid #333;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background-color: #10a37f;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0e8c6c;
+    }
+
+    .answer {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      white-space: pre-wrap;
+      color: #ccc;
+    }
+
+    .loader {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10a37f;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ask Questions from Your PDF</h1>
+    <form method="post" enctype="multipart/form-data" class="form" id="qa-form">
+      {% csrf_token %}
+      <input type="file" name="pdf_reader" accept="application/pdf" required>
+      <textarea name="question" rows="3" placeholder="Ask your question..." required>{{ form.question.value }}</textarea>
+      <button type="submit">Ask</button>
+    </form>
+
+    <div class="chat-box">
+      {% if answer %}
+      <div class="answer">
+        Based on the context below, provide a detailed answer to the question: 
+        <strong>{{ form.question.value }}</strong>
+        It is <strong>{{ answer }}</strong>.
+      </div>
+      {% elif request.method == "POST" %}
+        <div class="answer"><span class="loader"></span> Thinking...</div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

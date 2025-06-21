@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intelligent PDF QA System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #000;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      background-color: #000;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    header div {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .login {
+      background-color: #1e1e1e;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid #333;
+      transition: background 0.3s;
+    }
+
+    .login:hover {
+      background-color: #2a2a2a;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    p.date {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .actions {
+      margin: 30px 0;
+    }
+
+    .actions a {
+      display: inline-block;
+      margin: 0 8px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+      background-color: #10a37f;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0e8c6c;
+    }
+
+    .btn-secondary {
+      background-color: #1e1e1e;
+      color: white;
+      border: 1px solid #333;
+    }
+
+    .btn-secondary:hover {
+      background-color: #2a2a2a;
+    }
+
+    section {
+      text-align: left;
+      margin-top: 60px;
+    }
+
+    section h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    section p,
+    section ul {
+      color: #ccc;
+      font-size: 1rem;
+    }
+
+    section ul {
+      padding-left: 20px;
+    }
+
+    section ul li {
+      margin-bottom: 10px;
+    }
+
+    footer {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #666;
+      padding-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div><strong>Intelligent PDF QA System</strong></div>
+    {% if user.is_authenticated %}
+    <div>
+      Hello, {{ user.username }}!
+      <a href="{% url 'logout' %}" class="login">Log Out</a>
+    </div>
+    {% else %}
+        <a href="{% url 'login' %}" class="login">Log In</a>
+    {% endif %}
+  </header>
+
+  <main>
+    <p class="date">November 30, 2022 &nbsp; | &nbsp; Product</p>
+    <h1>Introducing Intelligent PDF QA System</h1>
+
+    <div class="actions">
+      <a href="{% url 'greeting' %}" class="btn-primary">Try Now</a>
+      <a href="#" class="btn-secondary">Download Project Template</a>
+    </div>
+
+    <section>
+        <h2>What the Project Consists Of</h2>
+        <p>
+          The Intelligent PDF QA System is designed to enable dynamic, accurate question answering from user-uploaded PDF documents. 
+          When a PDF is uploaded, it undergoes a multi-step transformation pipeline. First, the system extracts textual data from the document. 
+          This raw text is then segmented into manageable chunks using LangChain, ensuring each piece retains semantic meaning and contextual relevance.
+        </p>
+        <p>
+          To prepare the text for processing by our language model, each chunk is converted into numerical form using a BERT tokenizer. 
+          These tokenized inputs are passed through a pre-trained deep learning model implemented using PyTorch, which computes logits representing the model’s interpretation of the text.
+          The system then uses this representation to generate high-confidence answers to user questions — answers rooted in the actual content of the PDF, even for long or technical documents.
+        </p>
+      </section>
+
+      <section>
+        <h2>Limitations</h2>
+        <ul>
+          <li>
+            <strong>Context Fragmentation:</strong> While the document is split into chunks for better handling, this can sometimes lead to answers missing the broader context, especially if critical information spans across multiple sections.
+          </li>
+          <li>
+            <strong>Quality of PDF Text Extraction:</strong> If the PDF is poorly formatted, scanned, or contains a lot of images, the text extraction phase may result in incomplete or inaccurate data, affecting downstream results.
+          </li>
+          <li>
+            <strong>Inability to Interpret Visuals:</strong> Diagrams, charts, and images embedded in PDFs are currently ignored. As a result, any important content conveyed visually will not be considered in the answer.
+          </li>
+          <li>
+            <strong>Answer Accuracy Relies on Training:</strong> The performance of the underlying model depends heavily on its training data. If the question falls outside the model’s understanding or the document doesn’t contain a direct answer, the system might generate misleading outputs.
+          </li>
+          <li>
+            <strong>Performance and Latency:</strong> Depending on the size of the PDF and server capacity, processing may take time. For very large PDFs, processing speed and memory usage can become limiting factors.
+          </li>
+        </ul>
+      </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Intelligent PDF QA System. All rights reserved.
+  </footer>
+
+</body>
+</html>
