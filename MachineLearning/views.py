@@ -7,7 +7,7 @@ from django.contrib.auth import login,logout
 # Load model once
 # tokenizer, model = load_model()
 
-def greeting(request):
+def transformer(request):
     answer = None
 
     if request.method == "POST":
