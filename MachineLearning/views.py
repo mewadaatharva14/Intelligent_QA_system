@@ -28,7 +28,7 @@ def transformer(request):
 
     return render(request, 'index2.html', {'form': form, 'answer': answer})
 
-def index(request):
+def home(request):
     return render(request,'index.html')
 
 def login_view(request):
